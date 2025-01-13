@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     private PlayerInput playerInput;
     private Vector2 direction;
     private Animator animator;
+    private SpriteRenderer spriteRenderer;
     [SerializeField] private string IdleStateName = "Player_Idle";
     [SerializeField] private string MoveStateName = "Player_Move";
 
@@ -20,6 +21,7 @@ public class PlayerController : MonoBehaviour
         rb2D = GetComponent<Rigidbody2D>();
         playerInput = GetComponent<PlayerInput>();
         animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
@@ -35,6 +37,10 @@ public class PlayerController : MonoBehaviour
         }
 
         FlipHorizontally();
+
+        // Cambia el sortingOrder según la posición en Y
+        // Invertimos la posición en Y para que objetos más abajo en la pantalla se dibujen encima
+        spriteRenderer.sortingOrder = Mathf.RoundToInt(-transform.position.y * 10);
     }
 
     private void FixedUpdate()
